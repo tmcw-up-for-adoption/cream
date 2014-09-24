@@ -1,0 +1,19 @@
+{
+  "name": "cream",
+  "version": "0.0.0",
+  "description": "cash rules everything around me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "~1.4.6",
+    "csv-write-stream": "~0.2.1",
+    "event-stream": "~3.1.7",
+    "lodash": "~2.4.1",
+    "concat-stream": "~1.4.6",
+    "through2": "~0.6.2"
+  }
+}
