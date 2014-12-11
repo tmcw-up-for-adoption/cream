@@ -8,7 +8,7 @@ var fs = require('fs'),
 fs.createReadStream('./companies/Companies-Table 1.csv')
   .pipe(csvParse())
   .pipe(through({ objectMode: true }, function(data, enc, callback) {
-    var val = parseFloat(data.funding_total_usd.replace(',', ''));
+    var val = parseFloat(data.funding_total_usd.replace(/,/g, ''));
     if (isNaN(val)) return callback();
     var subset = _.pick(data, ['permalink', 'homepage_url', 'name']);
     subset.permalink = subset.permalink.replace('/organization', '');
@@ -16,10 +16,19 @@ fs.createReadStream('./companies/Companies-Table 1.csv')
     if (!parts) return callback();
     subset.homepage_url = parts.host;
     subset.funding = val;
-    this.push(subset);
+    if (subset.funding && parts.host) {
+        this.push([[parts.host.replace(/^www\./, ''), subset.funding]]);
+    }
     callback();
   }))
   .pipe(concat(function(data) {
-    console.log(data);
-    fs.writeFileSync('companies-distilled.json', JSON.stringify(data));
+    var obj = {};
+    data.forEach(function(d) {
+        if (obj[d[0]] === undefined) obj[d[0]] = 0;
+        obj[d[0]] += d[1];
+    });
+    fs.writeFileSync('companies-distilled.json', JSON.stringify(obj, null, 2));
+    fs.writeFileSync('./extension/background.js',
+        fs.readFileSync('./extension/background.template.js', 'utf8')
+            .replace('DATA', JSON.stringify(obj)));
   }));
