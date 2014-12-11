@@ -13,6 +13,7 @@ fs.createReadStream('./companies/Companies-Table 1.csv')
     var subset = _.pick(data, ['permalink', 'homepage_url', 'name']);
     subset.permalink = subset.permalink.replace('/organization', '');
     var parts = url.parse(subset.homepage_url);
+    if (parts.path && parts.path !== '/') return callback();
     if (!parts) return callback();
     subset.homepage_url = parts.host;
     subset.funding = val;
