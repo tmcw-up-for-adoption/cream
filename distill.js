@@ -11,22 +11,21 @@ fs.createReadStream('./companies/Companies-Table 1.csv')
     var val = parseFloat(data.funding_total_usd.replace(/,/g, ''));
     if (isNaN(val)) return callback();
     var subset = _.pick(data, ['permalink', 'homepage_url', 'name']);
-    subset.permalink = subset.permalink.replace('/organization', '');
+    subset.permalink = subset.permalink;
     var parts = url.parse(subset.homepage_url);
     if (parts.path && parts.path !== '/') return callback();
     if (!parts) return callback();
     subset.homepage_url = parts.host;
     subset.funding = val;
     if (subset.funding && parts.host) {
-        this.push([[parts.host.replace(/^www\./, ''), subset.funding]]);
+        this.push([[parts.host.replace(/^www\./, ''), subset.funding, subset.permalink]]);
     }
     callback();
   }))
   .pipe(concat(function(data) {
     var obj = {};
     data.forEach(function(d) {
-        if (obj[d[0]] === undefined) obj[d[0]] = 0;
-        obj[d[0]] += d[1];
+        obj[d[0]] = [d[1], d[2]];
     });
     fs.writeFileSync('companies-distilled.json', JSON.stringify(obj, null, 2));
     fs.writeFileSync('./extension/background.js',

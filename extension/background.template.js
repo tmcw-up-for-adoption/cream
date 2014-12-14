@@ -11,13 +11,18 @@ function handleTab(tab) { if (tab.url) query(tab.url, tab.id); }
 function query(url, tabId) {
   var funding = companies[getHost(url)];
   if (funding !== undefined) {
-    var formatted = formatDollars(funding);
+    var formatted = formatDollars(funding[0]);
     chrome.browserAction.setBadgeText({ text: formatted[0], tabId: tabId });
     chrome.browserAction.setBadgeBackgroundColor({ color: formatted[1], tabId: tabId });
   } else {
     chrome.browserAction.disable(tabId);
   }
 }
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+  var funding = companies[getHost(tab.url)];
+  if (funding) chrome.tabs.create({ url: 'http://crunchbase.com' + funding[1] });
+});
 
 function formatDollars(num) {
     if (num >= 1000000000) {
