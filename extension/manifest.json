@@ -1,7 +1,10 @@
 {
   "manifest_version": 2,
   "name": "CREAM",
-  "description": "",
+  "short_name": "CREAM",
+  "description": "adds venture capital funding data to your everyday web browsing",
+  "author": "Tom MacWright, Beau Gunderson",
+  "homepage_url": "http://www.macwright.org/2014/12/12/cream.html",
   "version": "3.0",
   "permissions": [
     "<all_urls>",
