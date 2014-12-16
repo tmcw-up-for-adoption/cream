@@ -40,26 +40,17 @@ function reverseString(string) {
 }
 
 function getHost(url) {
-  if (url.indexOf('/') === -1) {
-    return url;
-  }
-
+  if (url.indexOf('/') === -1) { return url; }
   return url.substring(0, url.indexOf('/'));
 }
 
 function getPath(url) {
-  if (url.indexOf('/') === -1) {
-    return '';
-  }
-
+  if (url.indexOf('/') === -1) { return ''; }
   return url.substring(url.indexOf('/')).replace(/\/$/, '');
 }
 
 function firstPathSegment(path) {
-  if (path.indexOf('/') === -1) {
-    return '';
-  }
-
+  if (path.indexOf('/') === -1) { return ''; }
   return path.replace(/^\//, '').split('/')[0];
 }
 
