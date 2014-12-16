@@ -13,13 +13,12 @@ fs.createReadStream('./companies/Companies-Table 1.csv')
     var subset = _.pick(data, ['permalink', 'homepage_url', 'name']);
     subset.permalink = subset.permalink;
     var parts = url.parse(subset.homepage_url);
-    if (parts.path && parts.path !== '/') return callback();
-    if (!parts) return callback();
-    subset.homepage_url = parts.host;
+    if (!parts || !parts.host) return callback();
+    parts.path = parts.path.replace(/\/$/, '');
+    parts.host = parts.host.replace(/^www-?\d{0,2}\./, '');
+    subset.homepage_url = parts.host + parts.path;
     subset.funding = val;
-    if (subset.funding && parts.host) {
-        this.push([[parts.host.replace(/^www\./, ''), subset.funding, subset.permalink]]);
-    }
+    this.push([[subset.homepage_url, subset.funding, subset.permalink]]);
     callback();
   }))
   .pipe(concat(function(data) {
