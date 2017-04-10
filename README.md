@@ -1,5 +1,7 @@
 # cream
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tmcw/cream.svg)](https://greenkeeper.io/)
+
 Discontinued: this project relied on CrunchBase data exports, which have been replaced by [a paid API](https://about.crunchbase.com/pricing/).
 
 ![](cream.gif)
