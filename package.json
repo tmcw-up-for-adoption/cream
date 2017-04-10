@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "csv-parser": "~1.4.6",
-    "csv-write-stream": "~0.2.1",
-    "event-stream": "~3.1.7",
-    "lodash": "~2.4.1",
-    "concat-stream": "~1.4.6",
-    "through2": "~0.6.2"
+    "csv-parser": "~1.11.0",
+    "csv-write-stream": "~2.0.0",
+    "event-stream": "~3.3.4",
+    "lodash": "~4.17.4",
+    "concat-stream": "~1.6.0",
+    "through2": "~2.0.3"
   }
 }
